@@ -1,0 +1,101 @@
+# Compiled source files
+*.dll
+*.exe
+*.so
+*.dylib
+*.pdb
+
+# Folders for intermediate and generated files
+bin/
+obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Auto-generated VS Code settings
+.vscode/
+
+# Log files
+*.log
+
+# App settings and secrets
+appsettings*.json
+!appsettings.json
+appsettings.*.json
+secrets.json
+appsettings.json
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Entity Framework migrations
+Migrations/
+
+# Rider and JetBrains Rider-specific files
+.idea/
+*.sln.iml
+
+# Resharper settings
+_ReSharper*/
+*.DotSettings.user
+
+# dotCover settings
+*.dotCover
+
+# NCrunch
+_NCrunch_*
+.*crunch*
+
+# VS for Mac
+.vscode/
+.vscode/*
+*.pidb
+*.pidb-*
+
+.env
+
+# Docker
+
+# MongoDB
+*.lock
+data/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Temporary files
+*.temp
+*.tmp
+*.bak
+*.old
+
+# IDE-specific files
+.idea/
+.vscode/
+.vscode/*
+
+# Visual Studio Code workspace settings
+.vscode/settings.json
+
+# Exclude node_modules if using Node.js in any part of the project
+node_modules/
+npm-debug.log*
+
+# Exclude yarn files
+yarn-error.log
+.yarn/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
