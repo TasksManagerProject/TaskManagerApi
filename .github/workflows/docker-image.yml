@@ -50,6 +50,28 @@ jobs:
         run: |
           docker push novellarslt/tasksmanager-api:${{ env.NEW_VERSION }}
           docker push novellarslt/tasksmanager-api:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: SSH to Local Machine and Deploy
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            # Detener y eliminar el contenedor antiguo
+            docker stop tasksmanager-api || true
+            docker rm tasksmanager-api || true
+
+            # Descargar la última imagen desde Docker Hub
+            docker pull novellarslt/tasksmanager-api:latest
+
+            # Ejecutar el nuevo contenedor
+            docker run --name tasksmanager-api --env-file /home/ec2-user/.env -d -p 80:80 novellarslt/tasksmanager-api:latest
+        
           
 
 
