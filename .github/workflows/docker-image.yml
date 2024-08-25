@@ -1,0 +1,57 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Git Semantic Version
+        id: version
+        uses: PaulHatch/semantic-version@v4.0.3
+        with:
+          major_pattern: "major:"
+          minor_pattern: "feat:"
+          format: "${major}.${minor}.${patch}-prerelease${increment}"
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          echo "Iniciando login"
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+          echo "Fin del login!!!"
+
+      - name: Build Docker Image
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          docker build -t novellarslt/tasksmanager-api:${{ env.NEW_VERSION }} .
+          docker build -t novellarslt/tasksmanager-api:latest .
+
+      - name: Push Docker Image
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
+          MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
+          MONGO_DATABASE_NAME: ${{ secrets.MONGO_DATABASE_NAME }}
+        run: |
+          docker push novellarslt/tasksmanager-api:${{ env.NEW_VERSION }}
+          docker push novellarslt/tasksmanager-api:latest
+          
+
+
+
+          
