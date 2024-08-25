@@ -55,6 +55,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Run SSH command
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: your-command-here
+          host: ${{ secrets.HOST }}
+          username: ec2-user
+          port: 22
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+    
       - name: SSH to Local Machine and Deploy
         uses: garygrossgarten/github-action-ssh@release
         with:
