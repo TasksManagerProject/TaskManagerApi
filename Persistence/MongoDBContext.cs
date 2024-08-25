@@ -15,5 +15,7 @@ namespace TasksManagerApi.Persistence
 
         public IMongoCollection<Priority> Priorities => _database.GetCollection<Priority>("Priorities"); // obtiene la colección de prioridades
         public IMongoCollection<User> Users => _database.GetCollection<User>("Users"); // obtiene la colección de usuarios
+
+        public IMongoCollection<Models.Task> Tasks => _database.GetCollection<Models.Task>("Tasks"); // obtiene la colección de tareas
     }
 }

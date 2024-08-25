@@ -19,6 +19,8 @@ obj/
 # Auto-generated VS Code settings
 .vscode/
 
+.vs
+
 # Log files
 *.log
 

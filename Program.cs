@@ -79,6 +79,44 @@ app.MapPost("api/v1/users", async (MongoDBContext _context, User user) =>
     return Results.Created($"api/v1/users/{user.Id}", user);
 }).WithName("CreateUser").WithOpenApi();
 
+// Tasks
+
+app.MapGet("api/v1/tasks", async (MongoDBContext _context) =>
+{
+    return await _context.Tasks.Find(_ => true).ToListAsync();
+}).WithName("GetAllTasks").WithOpenApi();
+
+app.MapGet("api/v1/tasks/enable", async (MongoDBContext _context) =>
+{
+    return await _context.Tasks.Find(t => t.Status == 1).ToListAsync();
+}).WithName("GetTasksEnable").WithOpenApi();
+
+app.MapGet("api/v1/tasks/disable", async (MongoDBContext _context) =>
+{
+    return await _context.Tasks.Find(t => t.Status == 2).ToListAsync();
+}).WithName("GetTasksDisable").WithOpenApi();
+
+app.MapGet("api/v1/tasks/completed", async (MongoDBContext _context) =>
+{
+    return await _context.Tasks.Find(t => t.IsCompleted == true).ToListAsync();
+}).WithName("GetTasksCompleted").WithOpenApi();
+
+app.MapGet("api/v1/tasks/incompleted", async (MongoDBContext _context) =>
+{
+    return await _context.Tasks.Find(t => !t.IsCompleted).ToListAsync();
+}).WithName("GetTasksIncompleted").WithOpenApi();
+
+app.MapGet("api/v1/tasks/{id:int}", async(MongoDBContext _context, string id) =>
+{
+    return await _context.Tasks.Find(t => t.Id == id).FirstOrDefaultAsync();
+});
+
+app.MapPost("api/v1/tasks", async (MongoDBContext _context, TasksManagerApi.Models.Task task) =>
+{
+    await _context.Tasks.InsertOneAsync(task);
+    return Results.Created($"api/v1/tasks/{task.Id}", task);
+});
+
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
