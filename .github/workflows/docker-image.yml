@@ -63,7 +63,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Detener y eliminar el contenedor antiguo
+            # Detener y eliminar el contenedor antiguo 
             docker stop tasksmanager-api || true
             docker rm tasksmanager-api || true
 
