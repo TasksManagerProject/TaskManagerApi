@@ -56,11 +56,10 @@ jobs:
     needs: build
     steps:
       - name: SSH to Local Machine and Deploy
-        uses: garygrossgarten/github-action-ssh@release
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Detener y eliminar el contenedor antiguo 
